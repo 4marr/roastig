@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roasting Akun Instagram</title>
+    <style>
+        main {
+            padding: 1em;
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        input {
+            margin-right: .5em;
+            padding: .5em
+        }
+
+        button {
+            padding: .5em
+        }
+    </style>
+</head>
+<body>
+    <h2>Instagram Profile Roasting🔥🔥🔥</h2>
+
+    <input type="text" name="username" id="username" placeholder="Enter yur Instagram account usernamee..">
+
+    <button onclick="roast()">Submit</button>
+    <h3 id="alert">Enter a GitHub username to get started.</h3>
+    <p id="result"></p>
+    <script>
+        function roast() {
+            document.getElementById("alert").innerHTML = "Loading.."
+            let usernameIg = document.getElementById("username").value;
+            let stalkApi = `https://itzpire.com/stalk/instagram?username=${usernameIg}`;
+            let roastApi = `https://api.nyxs.pw/ai/gemini?text=`
+            
+            fetch(stalkApi)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                console.log(usernameIg)
+                console.log(stalkApi)
+                let username = data.data.username;
+                let datas = {
+                    "name" : data.data.fullName,
+                    "bio" : data.data.bio,
+                    "followers" : data.data.followers,
+                    "following" : data.data.following
+                }
+                console.log(datas)
+
+                let prompt = "berikan roasting singkat dengan kejam,menyindir, serta menyakitkan dalam bahasa gaul untuk profile instagram berikut"
+                let emphasizePrompt = ". (berikan response dalam bahasa indonesia dan jangan berikan pujian atau saran)"
+                fetch(`https://api.nyxs.pw/ai/gemini?text=${encodeURIComponent(prompt)} ${username}. Berikut detailnya: "${JSON.stringify(datas)}"${emphasizePrompt
+                }`)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    console.log(data)
+                    document.getElementById("result").innerHTML = data.result;
+                    document.getElementById("alert").innerHTML = "Roasting result: "
+                })
+            })
+        }
+    </script>
+</body>
+</html>
